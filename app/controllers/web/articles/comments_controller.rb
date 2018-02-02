@@ -1,6 +1,8 @@
 class Web::Articles::CommentsController < Web::ApplicationController
 
-  http_basic_authenticate_with name: "viraj", password: "password", only: :destroy
+  unless Rails.env.test?
+    http_basic_authenticate_with name: "viraj", password: "password", only: :destroy
+  end
 
   def create
     @article = Article.find(params[:article_id])

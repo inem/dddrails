@@ -1,6 +1,8 @@
 class Web::ArticlesController < Web::ApplicationController
 
-  http_basic_authenticate_with name: "viraj", password: "password", except: [:index, :show]
+  unless Rails.env.test?
+    http_basic_authenticate_with name: "viraj", password: "password", except: [:index, :show]
+  end
 
   def index
     @articles = Article.all
