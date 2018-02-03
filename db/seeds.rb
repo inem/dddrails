@@ -5,3 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Article::Category.where(title: "Main").first_or_create
+Article::Category.where(title: "Secondary").first_or_create
