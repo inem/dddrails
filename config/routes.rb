@@ -4,6 +4,9 @@ Rails.application.routes.draw do
 
     resources :articles do
       scope module: :articles do
+        member do
+          patch :moderate
+        end
         resources :comments
       end
     end

@@ -25,6 +25,11 @@
   </p>
 
   <p>
+    <%= form.label :category_id %><br>
+    <%= form.select :category, Article::Category.all.map{|c| [c.title, c.id]}  %>
+  </p>
+
+  <p>
     <%= form.submit %>
   </p>
 

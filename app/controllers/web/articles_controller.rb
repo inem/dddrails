@@ -16,6 +16,13 @@ class Web::ArticlesController < Web::ApplicationController
     @article = Article.find(params[:id])
   end
 
+  def moderate
+    @article = Article.find(params[:id])
+
+    @article.check!
+    redirect_to @article
+  end
+
   def create
     @article = Article.new(article_params)
 
@@ -45,6 +52,6 @@ class Web::ArticlesController < Web::ApplicationController
 
   private
   def article_params
-    params.require(:article).permit(:title, :text)
+    params.require(:article).permit(:title, :text, :category_id)
   end
 end

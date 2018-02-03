@@ -1,6 +1,11 @@
 require 'test_helper'
 
 class Web::ArticlesControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    @main_category = article_categories(:main)
+    @secondary_category = article_categories(:secondary)
+  end
+
   test "should get index" do
     get articles_url
     assert_response :success
@@ -22,17 +27,33 @@ class Web::ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should post create" do
-    post articles_url(params: {article: { title: "Supertitle", text: "Body"}})
+    # TODO: Use factory to build article
+    post articles_url(params: {article: { title: "Supertitle", text: "Body", category_id: @main_category.id }})
 
     new_article = Article.find_by(title: "Supertitle")
-    assert(new_article&.persisted?)
+    assert { new_article&.persisted? }
+    assert { new_article.state == 'draft' }
+    assert { new_article.text == 'Body' }
+    assert { new_article.category_id == @main_category.id }
   end
 
   test "should post update" do
     @article = articles(:one)
-    patch article_url(@article.id, params: {article: { title: "Supertitle", text: "Body"}})
+    patch article_url(@article.id), params: {article: { title: "Supertitle", text: "Body", category_id: @secondary_category.id}}
 
-    assert(@article.reload.title, "Supertitle")
+    @article.reload
+
+    assert { @article.title == "Supertitle" }
+    assert { @article.state == 'draft' }
+    assert { @article.category_id == @secondary_category.id }
+  end
+
+  test "should send to moderation" do
+    @article = articles(:one)
+
+    patch moderate_article_url(@article.id)
+
+    assert { @article.reload.state == 'moderation' }
   end
 
   test "should destroy" do
