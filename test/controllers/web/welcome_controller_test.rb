@@ -5,5 +5,4 @@ class Web::WelcomeControllerTest < ActionDispatch::IntegrationTest
     get welcome_index_url
     assert_response :success
   end
-
 end
