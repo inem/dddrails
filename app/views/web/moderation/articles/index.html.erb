@@ -1,0 +1,17 @@
+<h1>Articles: </h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Text</th>
+  </tr>
+  <% @articles.each do |article| %>
+    <tr>
+      <td><%= article.title %></td>
+      <td><%= article.text %></td>
+      <td><%= link_to 'Show', moderation_article_path(article) %></td>
+      <td><%= link_to 'Edit', edit_moderation_article_path(article) %></td>
+      <td><%= link_to 'Publish', publish_moderation_article_path(article), method: :patch %></td>
+    </tr>
+  <% end %>
+</table>

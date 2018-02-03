@@ -2,11 +2,20 @@ Rails.application.routes.draw do
   scope module: :web do
     get 'welcome/index'
 
-    resources :articles do
-      scope module: :articles do
+    namespace :moderation  do
+      resources :articles, only: [:index, :edit, :update, :show] do
         member do
-          patch :moderate
+          patch :publish
         end
+      end
+    end
+
+    resources :articles do
+      member do
+        patch :moderate
+      end
+
+      scope module: :articles do
         resources :comments
       end
     end
