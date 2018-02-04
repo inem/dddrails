@@ -14,7 +14,7 @@ class Web::Moderation::ArticlesController < Web::ApplicationController
   def update
     @article = ModerationArticleType.find(params[:id])
     if @article.update(article_params)
-      redirect_to moderation_article_url(@article)
+      redirect_to moderation_articles_path
     else
       render 'edit'
     end
