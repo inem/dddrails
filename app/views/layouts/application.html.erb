@@ -9,6 +9,10 @@
   </head>
 
   <body>
+    <% flash.each do |key, value| %>
+      <%= content_tag :div, value, class: "flash #{key}" %>
+    <% end %>
+
     <nav>
       <%= link_to "All articles", articles_path %> | <%= link_to "Moderation", moderation_articles_path %>
     </nav>

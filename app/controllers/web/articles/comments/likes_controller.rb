@@ -2,11 +2,11 @@ class Web::Articles::Comments::LikesController < Web::Articles::Comments::Applic
   def create
     @comment = Article::Comment.find(params[:comment_id])
 
-    likes_in_current_hour = Article::Comment::Like.where(created_at: 1.hour.ago..Time.current, comment: @comment).count
-
-    if likes_in_current_hour < 5
-      @like = @comment.likes.build(article: @comment.article)
-      @like.save!
+    case LikeMutator.create!(@comment)
+    when Some
+      flash.notice = "Your like has been created!"
+    when None
+      flash.alert = "Too many likes per hour!!!"
     end
 
     redirect_to article_path(@comment.article)
