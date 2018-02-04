@@ -1,14 +1,20 @@
 class LikeMutator
   class << self
-    def create!(comment, user = nil)
-      likes_in_current_hour = Article::Comment::Like.where(created_at: 1.hour.ago..Time.current, comment: comment).count
+    MAX_LIKES_PER_HOUR = 5
 
-      if likes_in_current_hour < 5
-        @like = comment.likes.build(article: comment.article)
-        @like.save!
-      end
+    def create!(comment)
+      comment.likes.build(article: comment.article).save
+    end
 
-      Maybe(@like)
+    def validate(comment)
+      #schema = Dry::Validation.Schema do
+      #  required(:email).filled(:str?)
+      #  required(:age).filled(:int?, gt?: 18)
+      #end
+
+      Articles::Comments::Likes::CreateSchema.
+        with(comment: comment).
+        call(max_likes_per_hour: MAX_LIKES_PER_HOUR)
     end
   end
 end

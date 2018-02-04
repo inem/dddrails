@@ -2,6 +2,8 @@ class Article::Comment::Like < ApplicationRecord
   belongs_to :comment
   belongs_to :article
 
+  scope :within_one_hour, -> { where('created_at > ?', 1.hour.ago) }
+
   # Так низя. Атата! Потомушто лайку низя знать про другие лайки
 
   # validate :no_more_than_five_likes

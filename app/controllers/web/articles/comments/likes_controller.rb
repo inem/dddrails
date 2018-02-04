@@ -1,15 +1,21 @@
 class Web::Articles::Comments::LikesController < Web::Articles::Comments::ApplicationController
   def create
-    @comment = Article::Comment.find(params[:comment_id])
-
-    case LikeMutator.create!(@comment)
-    when Some
-      flash.notice = "Your like has been created!"
-    when None
-      flash.alert = "Too many likes per hour!!!"
+    if validation.success?
+      LikeMutator.create!(resource_comment)
+      redirect_to article_path(resource_article)
+    else
+      redirect_to article_path(resource_article), alert: "Too many likes per hour!!!"
     end
+  end
 
-    redirect_to article_path(@comment.article)
+  private
+
+  def permitted_params
+    params.permit(:article_id, :comment_id)
+  end
+
+  def validation
+    LikeMutator.validate(resource_comment)
   end
 end
 
