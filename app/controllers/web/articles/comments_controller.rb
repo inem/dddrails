@@ -1,4 +1,4 @@
-class Web::Articles::CommentsController < Web::ApplicationController
+class Web::Articles::CommentsController < Web::Articles::ApplicationController
 
   unless Rails.env.test?
     http_basic_authenticate_with name: "viraj", password: "password", only: :destroy

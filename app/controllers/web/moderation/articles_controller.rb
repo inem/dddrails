@@ -1,4 +1,4 @@
-class Web::Moderation::ArticlesController < Web::ApplicationController
+class Web::Moderation::ArticlesController < Web::Moderation::ApplicationController
   def index
     @q = Article.with_state(:moderation).ransack(params[:q])
     @articles = @q.result(distinct: true)
