@@ -12,17 +12,17 @@ class Web::ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get show" do
-    get article_url(articles(:one).id)
+    get article_url(articles(:one))
     assert_response :success
   end
 
   test "should get new" do
-    get new_article_url(articles(:one).id)
+    get new_article_url(articles(:one))
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_article_url(articles(:one).id)
+    get edit_article_url(articles(:one))
     assert_response :success
   end
 
@@ -34,26 +34,27 @@ class Web::ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert { new_article&.persisted? }
     assert { new_article.state == 'draft' }
     assert { new_article.text == 'Body' }
-    assert { new_article.category_id == @main_category.id }
+    assert { new_article.category == @main_category }
   end
 
   test "should post update" do
     @article = articles(:one)
-    patch article_url(@article.id), params: {article: { title: "Supertitle", text: "Body", category_id: @secondary_category.id}}
+    patch article_url(@article), params: {article: { title: "Supertitle", text: "Body", category_id: @secondary_category.id}}
 
     @article.reload
 
     assert { @article.title == "Supertitle" }
     assert { @article.state == 'draft' }
-    assert { @article.category_id == @secondary_category.id }
+    assert { @article.category == @secondary_category }
   end
 
   test "should send to moderation" do
     @article = articles(:one)
 
     patch moderate_article_url(@article.id)
+    @article.reload
 
-    assert { @article.reload.state == 'moderation' }
+    assert { @article.state == 'moderation' }
   end
 
   test "should destroy" do

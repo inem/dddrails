@@ -3,7 +3,7 @@ require "application_system_test_case"
 class ArticleCommentsTest < ApplicationSystemTestCase
 
   test "create new comment" do
-    visit article_url(articles(:one).id)
+    visit article_url(articles(:one))
 
     assert_selector "p", text: "MyString"
 
@@ -14,6 +14,6 @@ class ArticleCommentsTest < ApplicationSystemTestCase
     # assert_selector "p", text: "Vasya"
     # assert_selector "p", text: "byl zdyes"
 
-    # assert(page.current_url, article_url(articles(:one).id))
+    # assert(page.current_url, article_url(articles(:one)))
   end
 end
