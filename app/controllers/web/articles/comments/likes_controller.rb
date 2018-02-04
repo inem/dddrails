@@ -1,8 +1,8 @@
-class Web::Articles::Comments::LikesController < ApplicationController
+class Web::Articles::Comments::LikesController < Web::Articles::Comments::ApplicationController
   def create
     @comment = Article::Comment.find(params[:comment_id])
 
-    likes_in_current_hour = Article::Comment::Like.where(created_at: 1.hour.ago..Time.now, comment: @comment).count
+    likes_in_current_hour = Article::Comment::Like.where(created_at: 1.hour.ago..Time.current, comment: @comment).count
 
     if likes_in_current_hour < 5
       @like = @comment.likes.build(article: @comment.article)
