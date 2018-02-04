@@ -9,8 +9,16 @@
 </p>
 
 <p>
+  <strong>Likes:</strong>
+  <%= "👍"*comment.likes.size %>
+</p>
+
+
+<p>
 <%= link_to 'Delete comment', article_comment_path(comment.article, comment),
 method: :delete,
 data: { confirm: 'Are you sure?' } %>
 </p>
 .........................................
+
+<%= button_to "Like", article_comment_likes_path(comment.article, comment) %>

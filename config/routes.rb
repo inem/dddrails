@@ -16,7 +16,11 @@ Rails.application.routes.draw do
       end
 
       scope module: :articles do
-        resources :comments
+        resources :comments do
+          scope module: :comments do
+            resources :likes, only: [:create]
+          end
+        end
       end
     end
 
