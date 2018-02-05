@@ -6,6 +6,12 @@ one:
   state: draft
   category: main
 
+two:
+  title: MyString
+  text: MyText
+  state: draft
+  category: main
+
 published:
   title: MyString
   text: MyText

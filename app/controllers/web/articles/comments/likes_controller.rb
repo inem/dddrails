@@ -1,11 +1,11 @@
 class Web::Articles::Comments::LikesController < Web::Articles::Comments::ApplicationController
   def create
-    if validation.success?
+    if resource_valid?
       LikeMutator.create!(resource_comment)
-      redirect_to article_path(resource_article)
     else
-      redirect_to article_path(resource_article), alert: "Too many likes per hour!!!"
+      flash.alert = "Too many likes per hour!!!"
     end
+    redirect_to article_path(resource_article)
   end
 
   private
@@ -14,7 +14,7 @@ class Web::Articles::Comments::LikesController < Web::Articles::Comments::Applic
     params.permit(:article_id, :comment_id)
   end
 
-  def validation
+  def resource_valid?
     LikeMutator.validate(resource_comment)
   end
 end

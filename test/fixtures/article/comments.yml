@@ -4,8 +4,10 @@ one:
   commentor: MyString
   body: MyText
   article: one
+  state: ok
 
-two:
-  commentor: MyString
-  body: MyText
+most_liked:
+  commentor: Johny Depp
+  body: Like Me!
   article: two
+  state: ok
