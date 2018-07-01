@@ -1,7 +1,9 @@
 class LikeMutator
   class << self
     def create!(comment)
-      comment.likes.build(article: comment.article).save!
+      like = comment.likes.build(article: comment.article)
+      like.save!
+      like
     end
 
     def validate(comment)

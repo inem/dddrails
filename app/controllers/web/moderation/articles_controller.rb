@@ -12,8 +12,8 @@ class Web::Moderation::ArticlesController < Web::Moderation::ApplicationControll
   end
 
   def update
-    @article = ModerationArticleType.find(params[:id])
-    if @article.update(article_params)
+    @article = ModerationArticlePhorm.find(params[:id])
+    if @article.update(params.require(:article))
       redirect_to moderation_articles_path
     else
       render 'edit'
@@ -30,6 +30,6 @@ class Web::Moderation::ArticlesController < Web::Moderation::ApplicationControll
 
   private
   def article_params
-    params.require(:article).permit(:title, :text, :category_id, :state_event)
+    params.require(:article).permit(:title, :text, :category_id)
   end
 end

@@ -5,8 +5,7 @@ class Article < ApplicationRecord
   accepts_nested_attributes_for :links
 
   belongs_to :category, required: false
-  validates :title, presence: true,
-                    length: { minimum: 5 }
+  validates :title, presence: true, length: { minimum: 5 }
 
   state_machine :state, initial: :draft do
     state :draft
